@@ -1,0 +1,95 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2865
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 LIFE748 Assessment 2 - Part 3: Structural Bioinformatics\
+Sample: GN9   Transcription Factor: MarA (b0986)\
+\
+GAI Declaration:\
+Claude (Anthropic, claude.ai) was used to assist with the following:\
+- Identifying marA (b0986) as a biologically relevant TF from the DEG list\
+- Interpreting the AlphaFold3 pLDDT confidence scores\
+- Interpreting the FoldSeek\
+- Structuring results\
+\
+Prompts Used:\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 why is marA a good tf to pick from my deg list\
+Claude responded: MarA is the master regulator of the mar regulon which controls over 60 genes involved in antibiotic resistance in E. coli. It is also visible on your volcano plot as b0986 which directly links your Part 2 and Part 3 results together \
+\pard\pardeftab720\partightenfactor0
+\cf0 what does plddt 86.89 mean for my alphafold3 prediction\
+\outl0\strokewidth0 Claude responded: \outl0\strokewidth0 \strokec2 Global pLDDT of 86.89 indicates good overall confidence. Regions above 70 are considered confident. Your HTH domains will likely be blue in ChimeraX while flexible terminal regions may be yellow or orange which is expected for AraC family transcription factors\
+what command do i use in chimerax to colour by plddt\
+\outl0\strokewidth0 Claude responded:\outl0\strokewidth0 \strokec2  color bfactor palette blue:white:red range 50,100 This colours residues from blue high confidence to red low confidence based on pLDDT scores in the b-factor column\
+my foldseek results show mostly bacteriophage proteins is that expected\
+\outl0\strokewidth0 Claude responded: \outl0\strokewidth0 \strokec2 This is actually an interesting finding worth discussing. It suggests the winged HTH fold used by MarA is ancient and conserved across bacterial and phage lineages. Mention this as a surprising finding in your results section\
+what does dnabind score 3.301 probability 0.9645 mean \
+\outl0\strokewidth0 Claude responded: \outl0\strokewidth0 \strokec2 A probability of 0.9645 is well above the 0.5 classification threshold so MarA is confidently predicted as a DNA binding protein. This confirms the structural prediction is consistent with MarA's known function as a transcription factor\kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+All analysis was performed by myself\
+\
+=============================================\
+TOOL 1: UniProt - Protein sequence retrieval\
+URL: uniprot.org\
+Search term: P0ACH5\
+Sequence retrieved: MarA, 127 amino acids\
+\
+=============================================\
+TOOL 2: AlphaFold3 - Structure prediction\
+URL: alphafoldserver.com\
+Input: MarA protein sequence (127 aa)\
+Job name: marA_GN9\
+Settings: default\
+Output: fold_mara_gn9_model_0.cif\
+Global pLDDT: 86.89\
+\
+=============================================\
+TOOL 3: UCSF ChimeraX - Structure visualisation\
+Version: downloaded from rbvi.ucsf.edu/chimerax\
+Input: fold_mara_gn9_model_0.cif\
+Command used to colour by confidence:\
+  color bfactor palette blue:white:red range 50,100\
+\
+=============================================\
+TOOL 4: FoldSeek - Structural similarity search\
+URL: search.foldseek.com\
+Input: fold_mara_gn9_model_0.cif\
+Top hit: Pseudomonas phage Dolphis\
+  Probability: 1.00, E-value: 1.26e-5\
+\
+=============================================\
+TOOL 5: DNAbind - DNA-binding prediction\
+URL: dnabind.szialab.org\
+Input: marA.pdb (converted from CIF using Biopython)\
+\
+Conversion command run in Terminal:\
+python3 -c "\
+from Bio.PDB import MMCIFParser, PDBIO\
+parser = MMCIFParser()\
+structure = parser.get_structure('marA',\
+  '/Users/\'97\'97/Downloads/fold_mara_gn9/fold_mara_gn9_model_0.cif')\
+io = PDBIO()\
+io.set_structure(structure)\
+io.save('/Users/\'97\'97/Downloads/marA.pdb')\
+"\
+\
+Result: Score=3.301, Probability=0.9645, Predicted: DNA-binding\
+\
+=============================================\
+TOOL 6: AlphaFold3 - TF-DNA complex\
+URL: alphafoldserver.com\
+Job name: marA_DNA_complex\
+Input protein: MarA sequence (127 aa)\
+Input DNA strand 1: AACGCACAAAATAATTTAAATGT\
+Input DNA strand 2: ACATTTAAATTATTTTGTGCGTT\
+Settings: default\
+Visualised in ChimeraX:\
+  color #1 blue\
+  color #2 red\
+  color #3 red}
